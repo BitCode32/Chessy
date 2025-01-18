@@ -15,9 +15,17 @@
 #define CHESSY_BLACK_QUEEN 'q'
 #define CHESSY_BLACK_KING 'k'
 
+#define CHESSY_PAWN_SCORE 10
+#define CHESSY_ROOK_SCORE 50
+#define CHESSY_BISHOP_SCORE 30
+#define CHESSY_KNIGHT_SCORE 30
+#define CHESSY_QUEEN_SCORE 90
+#define CHESSY_KING_SCORE 900
+
 #define CHESSY_BOARD_SIZE 8
 
 typedef struct {
+	int total_game_score;
 	char board[CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE];
 } chessy_chess_engine;
 
