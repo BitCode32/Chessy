@@ -1,4 +1,4 @@
-#include "../Include/ChessEngine.h"
+#include "../../Include/ChessEngine/ChessEngine.h"
 
 void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine) {
 	new_chess_engine->total_game_score = 0;

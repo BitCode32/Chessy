@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../Include/ChessEngine.h"
+#include "../Include/ChessEngine/ChessEngine.h"
 
 int main() {
 	chessy_chess_engine main_engine;
