@@ -1,6 +1,9 @@
 #ifndef CHESSY_CHESS_ENGINE
 #define CHESSY_CHESS_ENGINE
 
+#define CHESSY_WHITE 'W'
+#define CHESSY_BLACK 'B'
+
 #define CHESSY_WHITE_PAWN 'P'
 #define CHESSY_WHITE_ROOK 'R'
 #define CHESSY_WHITE_BISHOP 'B'
