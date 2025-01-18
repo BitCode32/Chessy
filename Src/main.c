@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../Include/ChessEngine/ChessEngine.h"
+#include "../Include/ChessEngine/ChessMove.h"
 
 int main() {
 	chessy_chess_engine main_engine;
@@ -11,5 +12,14 @@ int main() {
 		}
 		printf("\n");
 	}
+
+	chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT];
+	int move_count = ChessyChessMoveGetValidMove(&main_engine, 6, 2, possible_moves);
+
+	printf("%d possible moves with pawn\n", move_count);
+	for (int i = 0; i < move_count; i++) {
+		printf("row: %d, column: %d\n", possible_moves[i].row, possible_moves[i].column);
+	}
+
 	return 0;
 }

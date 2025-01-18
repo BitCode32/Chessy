@@ -1,6 +1,8 @@
 #ifndef CHESSY_CHESS_ENGINE
 #define CHESSY_CHESS_ENGINE
 
+#include "../Bool.h"
+
 #define CHESSY_WHITE 'W'
 #define CHESSY_BLACK 'B'
 
@@ -29,7 +31,12 @@
 
 typedef struct {
 	int total_game_score;
+	char current_color;
+
 	char board[CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE];
+	
+	chessy_bool is_en_passant_white[CHESSY_BOARD_SIZE];
+	chessy_bool is_en_passant_black[CHESSY_BOARD_SIZE];
 } chessy_chess_engine;
 
 void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine);

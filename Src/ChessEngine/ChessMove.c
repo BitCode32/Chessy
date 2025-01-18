@@ -1,7 +1,7 @@
 #include "../../Include/ChessEngine/ChessMove.h"
 
 int ChessyChessMoveGetValidMove(chessy_chess_engine *current_chess_engine, int row, int column, chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT]) {
-    switch (current_chess_engine->board[row + (column * CHESSY_BOARD_SIZE)]) {
+    switch (current_chess_engine->board[column + (row * CHESSY_BOARD_SIZE)]) {
         case CHESSY_WHITE_PAWN:
         case CHESSY_BLACK_PAWN:
             return ChessyChessMoveGetValidPawnMove(current_chess_engine, row, column, possible_moves);
@@ -35,6 +35,95 @@ int ChessyChessMoveGetValidMove(chessy_chess_engine *current_chess_engine, int r
 
 int ChessyChessMoveGetValidPawnMove(chessy_chess_engine *current_chess_engine, int row, int column, chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT]) {
     int move_count = 0;
+    chessy_bool is_white = (current_chess_engine->current_color == CHESSY_WHITE);
+
+    int direction = is_white ? -1 : 1;
+    int start_row = is_white ? 6 : 1;
+    char opponent_piece_start = is_white ? 'A' : 'a';
+    char opponent_piece_end = is_white ? 'Z' : 'z';
+
+    unsigned int row_move = row + direction;
+    unsigned int column_move = column;
+
+    if (current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] == ' ') {
+        possible_moves[move_count].row = row_move;
+        possible_moves[move_count].column = column_move;
+
+        move_count++;
+    }
+
+    row_move = row + (direction * 2);
+    if (row == start_row && current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] == ' ') {
+        possible_moves[move_count].row = row_move;
+        possible_moves[move_count].column = column_move;
+
+        move_count++;
+    }
+
+    row_move = row + direction;
+    column_move = column - 1;
+    if (column > 0) {
+        if (current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] >= opponent_piece_start && current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] <= opponent_piece_end) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = chessy_true;
+
+            move_count++;
+        }
+
+        row_move = row;
+        if (is_white) {
+            if (current_chess_engine->is_en_passant_white[column_move] && current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] == CHESSY_WHITE_PAWN) {
+                possible_moves[move_count].row = row_move + direction;
+                possible_moves[move_count].column = column_move;
+                possible_moves[move_count].is_capture = chessy_true;
+
+                move_count++;
+            }
+        } else {
+            if (current_chess_engine->is_en_passant_black[column_move] && current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] == CHESSY_BLACK_PAWN) {
+                possible_moves[move_count].row = row_move + direction;
+                possible_moves[move_count].column = column_move;
+                possible_moves[move_count].is_capture = chessy_true;
+
+                move_count++;
+            }
+        }
+    }
+
+    row_move = row + direction;
+    column_move = column + 1;
+    if (column < 7) {
+        if (current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] >= opponent_piece_start && current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] <= opponent_piece_end) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = chessy_true;
+
+            move_count++;
+        }
+
+        row_move = row;
+        if (is_white) {
+            if (current_chess_engine->is_en_passant_white[column_move] && current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] == CHESSY_WHITE_PAWN) {
+                possible_moves[move_count].row = row_move + direction;
+                possible_moves[move_count].column = column_move;
+                possible_moves[move_count].is_capture = chessy_true;
+
+                move_count++;
+            }
+        } else {
+            if (current_chess_engine->is_en_passant_black[column_move] && current_chess_engine->board[column_move + (row_move *  CHESSY_BOARD_SIZE)] == CHESSY_BLACK_PAWN) {
+                possible_moves[move_count].row = row_move + direction;
+                possible_moves[move_count].column = column_move;
+                possible_moves[move_count].is_capture = chessy_true;
+
+                move_count++;
+            }
+        }
+    }
+
+    current_chess_engine->is_en_passant_white;
+    current_chess_engine->is_en_passant_black;
 
     return move_count;
 }

@@ -2,6 +2,7 @@
 
 void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine) {
 	new_chess_engine->total_game_score = 0;
+	new_chess_engine->current_color = CHESSY_WHITE;
 
 	char chess_board[CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE] = {
 		CHESSY_BLACK_ROOK, CHESSY_BLACK_BISHOP, CHESSY_BLACK_KNIGHT, CHESSY_BLACK_QUEEN, CHESSY_BLACK_KING, CHESSY_BLACK_KNIGHT, CHESSY_BLACK_BISHOP, CHESSY_BLACK_ROOK,
@@ -16,5 +17,10 @@ void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine) {
 
 	for (int i = 0; i < CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE; i++) {
 		new_chess_engine->board[i] = chess_board[i];
+	}
+
+	for (int i = 0; i < CHESSY_BOARD_SIZE; i++) {
+		new_chess_engine->is_en_passant_white[i] = chessy_false;
+		new_chess_engine->is_en_passant_black[i] = chessy_false;
 	}
 }
