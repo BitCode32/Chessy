@@ -39,8 +39,8 @@ int ChessyChessMoveGetValidPawnMove(chessy_chess_engine *current_chess_engine, i
 
     int direction = is_white ? -1 : 1;
     int start_row = is_white ? 6 : 1;
-    char opponent_piece_start = is_white ? 'A' : 'a';
-    char opponent_piece_end = is_white ? 'Z' : 'z';
+    char opponent_piece_start = is_white ? 'a' : 'A';
+    char opponent_piece_end = is_white ? 'z' : 'Z';
 
     unsigned int row_move = row + direction;
     unsigned int column_move = column;
