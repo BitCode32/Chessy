@@ -43,14 +43,14 @@ int ChessyChessMoveGetValidPawnMove(chessy_chess_engine *current_chess_engine, i
         direction = -1;
         start_row = 6;
 
-        opponent_piece_start = 'A';
-        opponent_piece_end = 'Z';
+        opponent_piece_start = 'a';
+        opponent_piece_end = 'z';
     } else {
         direction = 1;
         start_row = 1;
 
-        opponent_piece_start = 'a';
-        opponent_piece_end = 'z';
+        opponent_piece_start = 'A';
+        opponent_piece_end = 'Z';
     }
 
     unsigned int row_move = row + direction;
