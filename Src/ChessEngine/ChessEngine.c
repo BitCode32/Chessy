@@ -39,7 +39,11 @@ chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, cha
 		for (int i = 0; i < move_count; i++) {
 			if (possible_moves[i].row == new_row && possible_moves[i].column == new_column) {
 				int current_index = current_column + (current_row * CHESSY_BOARD_SIZE);
-				current_chess_engine->board[new_column + (new_row * CHESSY_BOARD_SIZE)] = current_chess_engine->board[current_index];
+				int new_index = new_column + (new_row * CHESSY_BOARD_SIZE);
+
+				current_chess_engine->total_game_score -= ChessyChessEngineGetPieceScore(current_chess_engine->board[new_index]);
+
+				current_chess_engine->board[new_index] = current_chess_engine->board[current_index];
 				current_chess_engine->board[current_index] = ' ';
 
 				current_chess_engine->current_color = (current_chess_engine->current_color == CHESSY_WHITE) ? CHESSY_BLACK : CHESSY_WHITE;
@@ -49,4 +53,49 @@ chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, cha
 	}
 
 	return chessy_false;
+}
+
+int ChessyChessEngineGetPieceScore(char piece) {
+	switch (piece) {
+		case CHESSY_WHITE_PAWN:
+			return CHESSY_PAWN_SCORE;
+
+		case CHESSY_WHITE_ROOK:
+			return CHESSY_ROOK_SCORE;
+
+		case CHESSY_WHITE_BISHOP:
+			return CHESSY_BISHOP_SCORE;
+
+		case CHESSY_WHITE_KNIGHT:
+			return CHESSY_KNIGHT_SCORE;
+
+		case CHESSY_WHITE_QUEEN:
+			return CHESSY_QUEEN_SCORE;
+
+		case CHESSY_WHITE_KING:
+			return CHESSY_KING_SCORE;
+
+		case CHESSY_BLACK_PAWN:
+			return -CHESSY_PAWN_SCORE;
+
+		case CHESSY_BLACK_ROOK:
+			return -CHESSY_ROOK_SCORE;
+
+		case CHESSY_BLACK_BISHOP:
+			return -CHESSY_BISHOP_SCORE;
+
+		case CHESSY_BLACK_KNIGHT:
+			return -CHESSY_KNIGHT_SCORE;
+
+		case CHESSY_BLACK_QUEEN:
+			return -CHESSY_QUEEN_SCORE;
+
+		case CHESSY_BLACK_KING:
+			return -CHESSY_KING_SCORE;
+
+		default:
+			break;
+	}
+
+	return 0;
 }

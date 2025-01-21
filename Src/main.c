@@ -3,6 +3,7 @@
 #include "../Include/ChessEngine/ChessMove.h"
 
 static void printBoard(chessy_chess_engine *current_engine) {
+	printf("\ncurrent score: %d\n", current_engine->total_game_score);
 	printf("  abcdefgh\n");
 	for (int y = 0; y < CHESSY_BOARD_SIZE; y++) {
 		printf("%d ", 8 - y);
@@ -30,7 +31,7 @@ int main() {
 		while (getchar() != '\n');
 
 		if (!ChessyChessEngineMove(&main_engine, player_select, player_move)) {
-			printf("Invalid Move!\n\n");
+			printf("Invalid Move!\n");
 		}
 	}
 
