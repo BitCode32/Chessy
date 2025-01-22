@@ -1,8 +1,8 @@
 # Chessy
-Chessy is a high-performance chess engine build in c with a graphical user interface.
+Chessy is a high-performance chess engine build in c.
 
 # Introduction
-This chess engine supports both human vs human, human vs AI and AI vs AI matches. It comes with a build-in graphical user interface to play. The chess engine allows you to set the difficulty of the AI going from easy to very hard.
+This chess engine supports both human vs human, human vs AI and AI vs AI matches. The chess engine allows you to set the difficulty of the AI going from easy to very hard.
 
 # Features
 COMING SOON
