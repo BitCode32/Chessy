@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "../Include/ChessEngine/ChessEngine.h"
-#include "../Include/ChessEngine/ChessMove.h"
+#include <Chessy/ChessEngine.h>
+#include <Chessy/ChessMove.h>
 
 static void printBoard(chessy_chess_engine *current_engine) {
 	printf("\ncurrent score: %d\n", current_engine->total_game_score);

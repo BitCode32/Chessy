@@ -1,5 +1,5 @@
-#include "../../Include/ChessEngine/ChessEngine.h"
-#include "../../Include/ChessEngine/ChessMove.h"
+#include "../Include/Chessy/ChessEngine.h"
+#include "../Include/Chessy/ChessMove.h"
 
 void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine) {
 	new_chess_engine->total_game_score = 0;

@@ -1,7 +1,7 @@
 #ifndef CHESSY_CHESS_ENGINE
 #define CHESSY_CHESS_ENGINE
 
-#include "../Bool.h"
+#include "Bool.h"
 
 #define CHESSY_WHITE 'W'
 #define CHESSY_BLACK 'B'

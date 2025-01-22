@@ -1,4 +1,4 @@
-#include "../../Include/ChessEngine/ChessMove.h"
+#include "../Include/Chessy/ChessMove.h"
 
 int ChessyChessMoveGetValidMove(chessy_chess_engine *current_chess_engine, int row, int column, chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT]) {
     switch (current_chess_engine->board[column + (row * CHESSY_BOARD_SIZE)]) {

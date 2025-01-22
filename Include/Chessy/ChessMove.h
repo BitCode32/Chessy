@@ -2,7 +2,7 @@
 #define CHESSY_CHESS_MOVE
 
 #include "ChessEngine.h"
-#include "../Bool.h"
+#include "Bool.h"
 
 #define CHESSY_MAX_MOVE_COUNT 27
 
