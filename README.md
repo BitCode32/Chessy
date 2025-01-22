@@ -46,8 +46,9 @@ cmake --build .
 ## Running the engine
 After building the compiled executable will typically be located in the build directory:
 ```bash
-.\Chessy.exe
+.\ChessyApp.exe
 ``` 
+The library file will also be include in the same folder usually as Chessy.lib for windows or Chessy.a for linux. To use the library file you will need to copy the Chessy folder containing the header files and follow the setup process for a library in the build system you are using.  
 
 # Usage
 COMING SOON!
