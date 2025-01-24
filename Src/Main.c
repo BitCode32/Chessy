@@ -24,10 +24,10 @@ int main() {
 		printBoard(&main_engine);
 
 		printf("\nEnter move: ");
-		player_select[0] = getchar();
-		player_select[1] = getchar();
-		player_move[0] = getchar();
-		player_move[1] = getchar();
+		player_select[0] = (char)getchar();
+		player_select[1] = (char)getchar();
+		player_move[0] = (char)getchar();
+		player_move[1] = (char)getchar();
 		while (getchar() != '\n');
 
 		if (!ChessyChessEngineMove(&main_engine, player_select, player_move)) {
