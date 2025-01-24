@@ -142,25 +142,20 @@ int ChessyChessMoveGetValidPawnMove(chessy_chess_engine *current_chess_engine, i
 
 int ChessyChessMoveGetValidRookMove(chessy_chess_engine *current_chess_engine, int row, int column, chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT]) {
     int move_count = 0;
+    const int current_index = column + (row * CHESSY_BOARD_SIZE);
 
-    char opponent_piece_start, opponent_piece_end;
-    if (current_chess_engine->current_color == CHESSY_WHITE) {
-        opponent_piece_start = 'a';
-        opponent_piece_end = 'z';
-    } else {
-        opponent_piece_start = 'A';
-        opponent_piece_end = 'Z';
-    }
+    char opponent_piece_start = (current_chess_engine->current_color == CHESSY_WHITE) ? 'a' : 'A';
+    char opponent_piece_end = opponent_piece_start + 25;
     
     int row_move = row + 1;
-    int index = column + (row_move * CHESSY_BOARD_SIZE);
+    int index = current_index + CHESSY_BOARD_SIZE;
     while (row_move < CHESSY_BOARD_SIZE && current_chess_engine->board[index] == ' ') {
         possible_moves[move_count].row = row_move;
         possible_moves[move_count].column = column;
         possible_moves[move_count].is_capture = chessy_false;
 
         row_move++;
-        index = column + (row_move * CHESSY_BOARD_SIZE);
+        index += CHESSY_BOARD_SIZE;
         move_count++;
     }
 
@@ -173,15 +168,14 @@ int ChessyChessMoveGetValidRookMove(chessy_chess_engine *current_chess_engine, i
     }
 
     row_move = row - 1;
-    index = column + (row_move * CHESSY_BOARD_SIZE);
+    index = current_index - CHESSY_BOARD_SIZE;
     while (row_move >= 0 && current_chess_engine->board[index] == ' ') {
         possible_moves[move_count].row = row_move;
         possible_moves[move_count].column = column;
         possible_moves[move_count].is_capture = chessy_false;
 
         row_move--;
-        index = column + (row_move * CHESSY_BOARD_SIZE);
-
+        index -= CHESSY_BOARD_SIZE;
         move_count++;
     }
 
@@ -194,15 +188,14 @@ int ChessyChessMoveGetValidRookMove(chessy_chess_engine *current_chess_engine, i
     }
 
     int column_move = column + 1;
-    index = column_move + (row * CHESSY_BOARD_SIZE);
+    index = current_index + 1;
     while (column_move < CHESSY_BOARD_SIZE && current_chess_engine->board[index] == ' ') {
         possible_moves[move_count].row = row;
         possible_moves[move_count].column = column_move;
         possible_moves[move_count].is_capture = chessy_false;
 
         column_move++;
-        index = column_move + (row * CHESSY_BOARD_SIZE);
-
+        index++;
         move_count++;
     }
 
@@ -215,15 +208,14 @@ int ChessyChessMoveGetValidRookMove(chessy_chess_engine *current_chess_engine, i
     }
 
     column_move = column - 1;
-    index = column_move + (row * CHESSY_BOARD_SIZE);
+    index = current_index - 1;
     while (column_move >= 0 && current_chess_engine->board[index] == ' ') {
         possible_moves[move_count].row = row;
         possible_moves[move_count].column = column_move;
         possible_moves[move_count].is_capture = chessy_false;
 
         column_move--;
-        index = column_move + (row * CHESSY_BOARD_SIZE);
-
+        index--;
         move_count++;
     }
 
