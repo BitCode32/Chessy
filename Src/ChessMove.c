@@ -147,84 +147,34 @@ int ChessyChessMoveGetValidRookMove(chessy_chess_engine *current_chess_engine, i
     char opponent_piece_start = (current_chess_engine->current_color == CHESSY_WHITE) ? 'a' : 'A';
     char opponent_piece_end = opponent_piece_start + 25;
     
-    int row_move = row + 1;
-    int index = current_index + CHESSY_BOARD_SIZE;
-    while (row_move < CHESSY_BOARD_SIZE && current_chess_engine->board[index] == ' ') {
-        possible_moves[move_count].row = row_move;
-        possible_moves[move_count].column = column;
-        possible_moves[move_count].is_capture = chessy_false;
+    short row_step[4] = { 1, -1, 0, 0 };
+    short column_step[4] = { 0, 0, 1, -1 };
+    short index_step[4] = { CHESSY_BOARD_SIZE, -CHESSY_BOARD_SIZE, 1, -1 };
 
-        row_move++;
-        index += CHESSY_BOARD_SIZE;
-        move_count++;
-    }
+    for (unsigned short i = 0; i < 4; i++) {
+        int row_move = row + row_step[i];
+        int column_move = column + column_step[i];
+        int index = current_index + index_step[i];
 
-    if (current_chess_engine->board[index] >= opponent_piece_start && current_chess_engine->board[index] <= opponent_piece_end) {
-        possible_moves[move_count].row = row_move;
-        possible_moves[move_count].column = column;
-        possible_moves[move_count].is_capture = chessy_true;
+        while (row_move >= 0 && row_move < CHESSY_BOARD_SIZE && column_move >= 0 && column_move < CHESSY_BOARD_SIZE && current_chess_engine->board[index] == ' ') {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = chessy_false;
 
-        move_count++;
-    }
+            row_move += row_step[i];
+            column_move += column_step[i];
+            index += index_step[i];
 
-    row_move = row - 1;
-    index = current_index - CHESSY_BOARD_SIZE;
-    while (row_move >= 0 && current_chess_engine->board[index] == ' ') {
-        possible_moves[move_count].row = row_move;
-        possible_moves[move_count].column = column;
-        possible_moves[move_count].is_capture = chessy_false;
+            move_count++;
+        }
 
-        row_move--;
-        index -= CHESSY_BOARD_SIZE;
-        move_count++;
-    }
+        if (current_chess_engine->board[index] >= opponent_piece_start && current_chess_engine->board[index] <= opponent_piece_end) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = chessy_true;
 
-    if (current_chess_engine->board[index] >= opponent_piece_start && current_chess_engine->board[index] <= opponent_piece_end) {
-        possible_moves[move_count].row = row_move;
-        possible_moves[move_count].column = column;
-        possible_moves[move_count].is_capture = chessy_true;
-
-        move_count++;
-    }
-
-    int column_move = column + 1;
-    index = current_index + 1;
-    while (column_move < CHESSY_BOARD_SIZE && current_chess_engine->board[index] == ' ') {
-        possible_moves[move_count].row = row;
-        possible_moves[move_count].column = column_move;
-        possible_moves[move_count].is_capture = chessy_false;
-
-        column_move++;
-        index++;
-        move_count++;
-    }
-
-    if (current_chess_engine->board[index] >= opponent_piece_start && current_chess_engine->board[index] <= opponent_piece_end) {
-        possible_moves[move_count].row = row;
-        possible_moves[move_count].column = column_move;
-        possible_moves[move_count].is_capture = chessy_true;
-
-        move_count++;
-    }
-
-    column_move = column - 1;
-    index = current_index - 1;
-    while (column_move >= 0 && current_chess_engine->board[index] == ' ') {
-        possible_moves[move_count].row = row;
-        possible_moves[move_count].column = column_move;
-        possible_moves[move_count].is_capture = chessy_false;
-
-        column_move--;
-        index--;
-        move_count++;
-    }
-
-    if (current_chess_engine->board[index] >= opponent_piece_start && current_chess_engine->board[index] <= opponent_piece_end) {
-        possible_moves[move_count].row = row;
-        possible_moves[move_count].column = column_move;
-        possible_moves[move_count].is_capture = chessy_true;
-
-        move_count++;
+            move_count++;
+        }
     }
 
     return move_count;
