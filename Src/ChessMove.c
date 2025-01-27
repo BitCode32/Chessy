@@ -35,6 +35,7 @@ int ChessyChessMoveGetValidMove(chessy_chess_engine *current_chess_engine, int r
 
 int ChessyChessMoveGetValidPawnMove(chessy_chess_engine *current_chess_engine, int row, int column, chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT]) {
     int move_count = 0;
+    const int current_index = column + (row * CHESSY_BOARD_SIZE);
     chessy_bool is_white = (current_chess_engine->current_color == CHESSY_WHITE);
 
     int direction, start_row;
@@ -51,6 +52,10 @@ int ChessyChessMoveGetValidPawnMove(chessy_chess_engine *current_chess_engine, i
 
         opponent_piece_start = 'A';
         opponent_piece_end = 'Z';
+    }
+
+    if (current_chess_engine->board[current_index] >= opponent_piece_start && current_chess_engine->board[current_index] <= opponent_piece_end) {
+        return 0;
     }
 
     unsigned int row_move = row + direction;
@@ -146,7 +151,10 @@ int ChessyChessMoveGetValidRookMove(chessy_chess_engine *current_chess_engine, i
 
     char opponent_piece_start = (current_chess_engine->current_color == CHESSY_WHITE) ? 'a' : 'A';
     char opponent_piece_end = opponent_piece_start + 25;
-    
+    if (current_chess_engine->board[current_index] >= opponent_piece_start && current_chess_engine->board[current_index] <= opponent_piece_end) {
+        return 0;
+    }
+
     short row_step[4] = { 1, -1, 0, 0 };
     short column_step[4] = { 0, 0, 1, -1 };
     short index_step[4] = { CHESSY_BOARD_SIZE, -CHESSY_BOARD_SIZE, 1, -1 };
@@ -191,6 +199,9 @@ int ChessyChessMoveGetValidBishopMove(chessy_chess_engine *current_chess_engine,
 
     char opponent_piece_start = (current_chess_engine->current_color == CHESSY_WHITE) ? 'a' : 'A';
     char opponent_piece_end = opponent_piece_start + 25;
+    if (current_chess_engine->board[current_index] >= opponent_piece_start && current_chess_engine->board[current_index] <= opponent_piece_end) {
+        return 0;
+    }
 
     short row_step[4] = { 1, -1, 1, -1 };
     short column_step[4] = { 1, 1, -1, -1 };
@@ -232,14 +243,12 @@ int ChessyChessMoveGetValidBishopMove(chessy_chess_engine *current_chess_engine,
 
 int ChessyChessMoveGetValidKnightMove(chessy_chess_engine *current_chess_engine, int row, int column, chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT]) {
     int move_count = 0;
+    const int current_index = column + (row * CHESSY_BOARD_SIZE);
     
-    char own_piece_start, own_piece_end;
-    if (current_chess_engine->current_color == CHESSY_WHITE) {
-	    own_piece_start = 'A';
-	    own_piece_end = 'Z';
-    } else {
-	    own_piece_start = 'a';
-	    own_piece_end = 'z';
+    char own_piece_start = (current_chess_engine->current_color == CHESSY_WHITE) ? 'A' : 'a';
+    char own_piece_end = own_piece_start + 25;
+    if (current_chess_engine->board[current_index] < own_piece_start || current_chess_engine->board[current_index] > own_piece_end) {
+        return 0;
     }
 
     int row_move = row + 1;
@@ -343,6 +352,9 @@ int ChessyChessMoveGetValidQueenMove(chessy_chess_engine *current_chess_engine, 
 
     char opponent_piece_start = (current_chess_engine->current_color == CHESSY_WHITE) ? 'a' : 'A';
     char opponent_piece_end = opponent_piece_start + 25;
+    if (current_chess_engine->board[current_index] >= opponent_piece_start && current_chess_engine->board[current_index] <= opponent_piece_end) {
+        return 0;
+    }
     
     short row_step[8] = { 1, -1, 0, 0, 1, -1, 1, -1 };
     short column_step[8] = { 0, 0, 1, -1, 1, 1, -1, -1 };
