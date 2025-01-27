@@ -18,6 +18,20 @@ int main() {
 	chessy_chess_engine main_engine;
 	ChessyChessEngineInitialize(&main_engine);
 
+	for (unsigned short row = 0; row < CHESSY_BOARD_SIZE; row++) {
+		for (unsigned short column = 0; column < CHESSY_BOARD_SIZE; column++) {
+			chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT];
+			int move_count = ChessyChessMoveGetValidMove(&main_engine, row, column, possible_moves);
+
+			if (move_count > 0) {
+				printf("%c has the following possible moves: \n", main_engine.board[column + (row * CHESSY_BOARD_SIZE)]);
+				for (unsigned short i = 0; i < move_count; i++) {
+					printf("\t%c%c to %c%c\n", '8' - row, 'a' + column, '8' - possible_moves[i].row, 'a' + possible_moves[i].column);
+				}
+			}
+		}
+	}
+
 	char player_select[2];
 	char player_move[2];
 	while (player_select[0] != 'e' || player_select[1] != 'x' || player_move[0] != 'i' || player_move[1] != 't') {
