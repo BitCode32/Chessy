@@ -44,4 +44,6 @@ void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine);
 chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, char current_board_position[2], char new_board_position[2]);
 int ChessyChessEngineGetPieceScore(char piece);
 
+void ChessyChessEngineCopy(chessy_chess_engine *destination, chessy_chess_engine *origin);
+
 #endif

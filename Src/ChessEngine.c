@@ -33,8 +33,8 @@ chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, cha
 	chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT];
 	int move_count = ChessyChessMoveGetValidMove(current_chess_engine, current_row, current_column, possible_moves);
 	if (move_count > 0) {
-		int new_row = '8' - new_board_position[1];
-		int new_column = new_board_position[0] - 'a';
+		unsigned int new_row = '8' - new_board_position[1];
+		unsigned int new_column = new_board_position[0] - 'a';
 
 		for (int i = 0; i < move_count; i++) {
 			if (possible_moves[i].row == new_row && possible_moves[i].column == new_column) {
@@ -98,4 +98,18 @@ int ChessyChessEngineGetPieceScore(char piece) {
 	}
 
 	return 0;
+}
+
+void ChessyChessEngineCopy(chessy_chess_engine *destination, chessy_chess_engine *origin) {
+	destination->total_game_score = origin->total_game_score;
+	destination->current_color = origin->current_color;
+
+	for (unsigned short i = 0; i < CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE; i++) {
+		destination->board[i] = origin->board[i];
+	}
+
+	for (unsigned short i = 0; i < CHESSY_BOARD_SIZE; i++) {
+		destination->is_en_passant_white[i] = origin->is_en_passant_white[i];
+		destination->is_en_passant_black[i] = origin->is_en_passant_black[i];
+	}
 }
