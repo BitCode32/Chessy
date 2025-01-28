@@ -396,6 +396,100 @@ int ChessyChessMoveGetValidQueenMove(chessy_chess_engine *current_chess_engine, 
 
 int ChessyChessMoveGetValidKingMove(chessy_chess_engine *current_chess_engine, int row, int column, chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT]) {
     int move_count = 0;
+    const int current_index = column + (row * CHESSY_BOARD_SIZE);
+
+    char own_piece_start = (current_chess_engine->current_color == CHESSY_WHITE) ? 'A' : 'a';
+    char own_piece_end = own_piece_start + 25;
+    if (current_chess_engine->board[current_index] < own_piece_start || current_chess_engine->board[current_index] > own_piece_end) {
+        return 0;
+    }
+
+    int row_move = row - 1;
+    int column_move = column - 1;
+    int index = column_move + (row_move * CHESSY_BOARD_SIZE);
+    if (row_move >= 0) {
+        if (column_move >= 0 && (current_chess_engine->board[index] < own_piece_start || current_chess_engine->board[index] > own_piece_end)) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = (current_chess_engine->board[index] != ' ');
+
+            move_count++;
+        }
+
+        column_move = column;
+        index += 1;
+        if (current_chess_engine->board[index] < own_piece_start || current_chess_engine->board[index] > own_piece_end) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = (current_chess_engine->board[index] != ' ');
+
+            move_count++;
+        }
+
+        column_move = column + 1;
+        index += 1;
+        if (column_move < CHESSY_BOARD_SIZE && (current_chess_engine->board[index] < own_piece_start || current_chess_engine->board[index] > own_piece_end)) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = (current_chess_engine->board[index] != ' ');
+
+            move_count++;
+        }
+    }
+
+    row_move = row;
+    column_move = column - 1;
+    index = column_move + (row_move * CHESSY_BOARD_SIZE);
+    if (column_move >= 0 && (current_chess_engine->board[index] < own_piece_start || current_chess_engine->board[index] > own_piece_end)) {
+        possible_moves[move_count].row = row_move;
+        possible_moves[move_count].column = column_move;
+        possible_moves[move_count].is_capture = (current_chess_engine->board[index] != ' ');
+
+        move_count++;
+    }
+
+    column_move = column + 1;
+    index += 2;
+    if (column_move < CHESSY_BOARD_SIZE && (current_chess_engine->board[index] < own_piece_start || current_chess_engine->board[index] > own_piece_end)) {
+        possible_moves[move_count].row = row_move;
+        possible_moves[move_count].column = column_move;
+        possible_moves[move_count].is_capture = (current_chess_engine->board[index] != ' ');
+
+        move_count++;
+    }
+
+    row_move = row + 1;
+    if (row_move < CHESSY_BOARD_SIZE) {
+        column_move = column - 1;
+        index = column_move + (row_move * CHESSY_BOARD_SIZE);
+        if (column_move >= 0 && (current_chess_engine->board[index] < own_piece_start || current_chess_engine->board[index] > own_piece_end)) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = (current_chess_engine->board[index] != ' ');
+
+            move_count++;
+        }
+
+        column_move = column;
+        index += 1;
+        if (current_chess_engine->board[index] < own_piece_start || current_chess_engine->board[index] > own_piece_end) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = (current_chess_engine->board[index] != ' ');
+
+            move_count++;
+        }
+
+        column_move = column + 1;
+        index += 1;
+        if (column_move < CHESSY_BOARD_SIZE && (current_chess_engine->board[index] < own_piece_start || current_chess_engine->board[index] > own_piece_end)) {
+            possible_moves[move_count].row = row_move;
+            possible_moves[move_count].column = column_move;
+            possible_moves[move_count].is_capture = (current_chess_engine->board[index] != ' ');
+
+            move_count++;
+        }
+    }
 
     return move_count;
 }
