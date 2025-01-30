@@ -3,8 +3,7 @@
 
 #include "ChessEngine.h"
 #include "Bool.h"
-
-#define CHESSY_MAX_MOVE_COUNT 27
+#include "Constants.h"
 
 typedef struct {
     unsigned int row, column;
