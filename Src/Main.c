@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <Chessy/ChessEngine.h>
 #include <Chessy/ChessMove.h>
+#include <Chessy/ChessAI.h>
 
 static void printBoard(chessy_chess_engine *current_engine) {
 	printf("\ncurrent score: %d\n", current_engine->total_game_score);
@@ -38,6 +39,9 @@ int main() {
 			} else {
 				printf("Invalid Move!\n");
 			}
+		} else {
+			chessy_chess_ai_move ai_move = ChessyChessAIGetNextMove(&main_engine, CHESSY_DIFFICULTY_INTERMEDIATE);
+			ChessyChessEngineMove(&main_engine, ai_move.selected, ai_move.move);
 		}
 	}
 

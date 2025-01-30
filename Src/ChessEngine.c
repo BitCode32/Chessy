@@ -6,14 +6,14 @@ void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine) {
 	new_chess_engine->current_color = CHESSY_WHITE;
 
 	char chess_board[CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE] = {
-		CHESSY_BLACK_ROOK, CHESSY_BLACK_BISHOP, CHESSY_BLACK_KNIGHT, CHESSY_BLACK_QUEEN, CHESSY_BLACK_KING, CHESSY_BLACK_KNIGHT, CHESSY_BLACK_BISHOP, CHESSY_BLACK_ROOK,
+		CHESSY_BLACK_ROOK, CHESSY_BLACK_KNIGHT, CHESSY_BLACK_BISHOP, CHESSY_BLACK_QUEEN, CHESSY_BLACK_KING, CHESSY_BLACK_BISHOP, CHESSY_BLACK_KNIGHT, CHESSY_BLACK_ROOK,
 		CHESSY_BLACK_PAWN, CHESSY_BLACK_PAWN, CHESSY_BLACK_PAWN, CHESSY_BLACK_PAWN, CHESSY_BLACK_PAWN, CHESSY_BLACK_PAWN, CHESSY_BLACK_PAWN, CHESSY_BLACK_PAWN,
 		' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
 		' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
 		' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
 		' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
 		CHESSY_WHITE_PAWN, CHESSY_WHITE_PAWN, CHESSY_WHITE_PAWN, CHESSY_WHITE_PAWN, CHESSY_WHITE_PAWN, CHESSY_WHITE_PAWN, CHESSY_WHITE_PAWN, CHESSY_WHITE_PAWN,
-		CHESSY_WHITE_ROOK, CHESSY_WHITE_BISHOP, CHESSY_WHITE_KNIGHT, CHESSY_WHITE_QUEEN, CHESSY_WHITE_KING, CHESSY_WHITE_KNIGHT, CHESSY_WHITE_BISHOP, CHESSY_WHITE_ROOK
+		CHESSY_WHITE_ROOK, CHESSY_WHITE_KNIGHT, CHESSY_WHITE_BISHOP, CHESSY_WHITE_QUEEN, CHESSY_WHITE_KING, CHESSY_WHITE_BISHOP, CHESSY_WHITE_KNIGHT, CHESSY_WHITE_ROOK
 	};
 
 	for (int i = 0; i < CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE; i++) {
@@ -28,6 +28,7 @@ void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine) {
 	new_chess_engine->record_count = 0;
 }
 
+// TODO: add support for en passant, castling and promoting
 chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, char current_board_position[2], char new_board_position[2]) {
 	unsigned int current_row = '8' - current_board_position[1];
 	unsigned int current_column = current_board_position[0] - 'a';

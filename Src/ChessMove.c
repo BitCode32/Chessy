@@ -33,6 +33,10 @@ int ChessyChessMoveGetValidMove(chessy_chess_engine *current_chess_engine, int r
     return -1;
 }
 
+/*
+ * TODO: Improve all move validation and add check and checkmate
+ */
+
 int ChessyChessMoveGetValidPawnMove(chessy_chess_engine *current_chess_engine, int row, int column, chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT]) {
     int move_count = 0;
     const int current_index = column + (row * CHESSY_BOARD_SIZE);
