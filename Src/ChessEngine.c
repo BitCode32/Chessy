@@ -24,11 +24,13 @@ void ChessyChessEngineInitialize(chessy_chess_engine *new_chess_engine) {
 		new_chess_engine->is_en_passant_white[i] = chessy_false;
 		new_chess_engine->is_en_passant_black[i] = chessy_false;
 	}
+
+	new_chess_engine->record_count = 0;
 }
 
 chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, char current_board_position[2], char new_board_position[2]) {
-	int current_row = '8' - current_board_position[1];
-	int current_column = current_board_position[0] - 'a';
+	unsigned int current_row = '8' - current_board_position[1];
+	unsigned int current_column = current_board_position[0] - 'a';
 
 	chessy_chess_move possible_moves[CHESSY_MAX_MOVE_COUNT];
 	int move_count = ChessyChessMoveGetValidMove(current_chess_engine, current_row, current_column, possible_moves);
@@ -41,6 +43,30 @@ chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, cha
 				int current_index = current_column + (current_row * CHESSY_BOARD_SIZE);
 				int new_index = new_column + (new_row * CHESSY_BOARD_SIZE);
 
+				if (current_chess_engine->record_count == CHESSY_MAX_HISTORY_RECORDS) {
+					current_chess_engine->record_count--;
+					for (unsigned int record_index = 0; record_index < current_chess_engine->record_count; record_index++) {
+						current_chess_engine->records[record_index].from_row = current_chess_engine->records[record_index + 1].from_row;
+						current_chess_engine->records[record_index].from_column = current_chess_engine->records[record_index + 1].from_column;
+						current_chess_engine->records[record_index].to_row = current_chess_engine->records[record_index + 1].to_row;
+						current_chess_engine->records[record_index].to_column = current_chess_engine->records[record_index + 1].to_column;
+
+						current_chess_engine->records[record_index].current_color = current_chess_engine->records[record_index + 1].current_color;
+						current_chess_engine->records[record_index].own_piece = current_chess_engine->records[record_index + 1].own_piece;
+						current_chess_engine->records[record_index].opponent_piece = current_chess_engine->records[record_index + 1].opponent_piece;
+					}
+				}
+
+				current_chess_engine->records[current_chess_engine->record_count].from_row = current_row;
+				current_chess_engine->records[current_chess_engine->record_count].from_column = current_column;
+				current_chess_engine->records[current_chess_engine->record_count].to_row = new_row;
+				current_chess_engine->records[current_chess_engine->record_count].to_column = new_column;
+
+				current_chess_engine->records[current_chess_engine->record_count].current_color = current_chess_engine->current_color;
+				current_chess_engine->records[current_chess_engine->record_count].own_piece = current_chess_engine->board[current_index];
+				current_chess_engine->records[current_chess_engine->record_count].opponent_piece = current_chess_engine->board[new_index];
+
+				current_chess_engine->record_count++;
 				current_chess_engine->total_game_score -= ChessyChessEngineGetPieceScore(current_chess_engine->board[new_index]);
 
 				current_chess_engine->board[new_index] = current_chess_engine->board[current_index];
@@ -53,6 +79,24 @@ chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, cha
 	}
 
 	return chessy_false;
+}
+
+chessy_bool ChessyChessEngineUndoMove(chessy_chess_engine *current_chess_engine) {
+	if (current_chess_engine->record_count == 0) {
+		return chessy_false;
+	}
+
+	const unsigned int index = current_chess_engine->record_count - 1;
+
+	current_chess_engine->current_color = current_chess_engine->records[index].current_color;
+
+	current_chess_engine->board[current_chess_engine->records[index].from_column + (current_chess_engine->records[index].from_row * CHESSY_BOARD_SIZE)] = current_chess_engine->records[index].own_piece;
+	current_chess_engine->board[current_chess_engine->records[index].to_column + (current_chess_engine->records[index].to_row * CHESSY_BOARD_SIZE)] = current_chess_engine->records[index].opponent_piece;
+
+	current_chess_engine->total_game_score += ChessyChessEngineGetPieceScore(current_chess_engine->records[index].opponent_piece);
+
+	current_chess_engine->record_count--;
+	return chessy_true;
 }
 
 int ChessyChessEngineGetPieceScore(char piece) {
@@ -104,12 +148,24 @@ void ChessyChessEngineCopy(chessy_chess_engine *destination, chessy_chess_engine
 	destination->total_game_score = origin->total_game_score;
 	destination->current_color = origin->current_color;
 
-	for (unsigned short i = 0; i < CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE; i++) {
+	for (unsigned int i = 0; i < CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE; i++) {
 		destination->board[i] = origin->board[i];
 	}
 
-	for (unsigned short i = 0; i < CHESSY_BOARD_SIZE; i++) {
+	for (unsigned int i = 0; i < CHESSY_BOARD_SIZE; i++) {
 		destination->is_en_passant_white[i] = origin->is_en_passant_white[i];
 		destination->is_en_passant_black[i] = origin->is_en_passant_black[i];
+	}
+
+	destination->record_count = origin->record_count;
+	for (unsigned int i = 0; i < origin->record_count; i++) {
+		destination->records[i].from_row = origin->records[i].from_column;
+		destination->records[i].from_column = origin->records[i].from_column;
+		destination->records[i].to_row = origin->records[i].to_row;
+		destination->records[i].to_column = origin->records[i].to_column;
+
+		destination->records[i].current_color = origin->records[i].current_color;
+		destination->records[i].own_piece = origin->records[i].own_piece;
+		destination->records[i].opponent_piece = origin->records[i].opponent_piece;
 	}
 }

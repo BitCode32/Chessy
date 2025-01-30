@@ -31,7 +31,13 @@ int main() {
 		while (getchar() != '\n');
 
 		if (!ChessyChessEngineMove(&main_engine, player_select, player_move)) {
-			printf("Invalid Move!\n");
+			if (player_select[0] == 'u' && player_select[1] == 'n' && player_move[0] == 'd' && player_move[1] == 'o') {
+				if (!ChessyChessEngineUndoMove(&main_engine)) {
+					printf("Can't undo move\n");
+				}
+			} else {
+				printf("Invalid Move!\n");
+			}
 		}
 	}
 
