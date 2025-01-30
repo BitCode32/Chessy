@@ -6,7 +6,7 @@
 
 typedef struct {
 	int total_game_score;
-	char current_color;
+	unsigned int current_color;
 
 	char board[CHESSY_BOARD_SIZE * CHESSY_BOARD_SIZE];
 	

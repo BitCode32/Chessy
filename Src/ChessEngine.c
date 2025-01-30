@@ -46,7 +46,7 @@ chessy_bool ChessyChessEngineMove(chessy_chess_engine *current_chess_engine, cha
 				current_chess_engine->board[new_index] = current_chess_engine->board[current_index];
 				current_chess_engine->board[current_index] = ' ';
 
-				current_chess_engine->current_color = (current_chess_engine->current_color == CHESSY_WHITE) ? CHESSY_BLACK : CHESSY_WHITE;
+				current_chess_engine->current_color ^= 1;
 				return chessy_true;
 			}
 		}

@@ -1,8 +1,8 @@
 #ifndef CHESSY_CONSTANCE
 #define CHESSY_CONSTANCE
 
-#define CHESSY_WHITE 'W'
-#define CHESSY_BLACK 'B'
+#define CHESSY_WHITE 0
+#define CHESSY_BLACK 1
 
 #define CHESSY_WHITE_PAWN 'P'
 #define CHESSY_WHITE_ROOK 'R'
